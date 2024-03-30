@@ -5,7 +5,12 @@ const connection = require('./sqlDB.js'); // Import MySQL connection
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  }));
+  
 
 // Existing endpoint to check if user exists
 app.post("/", async (req, res) => {
@@ -48,9 +53,29 @@ app.post("/signup-mongodb", async (req, res) => {
     }
 });
 
+// In your Server.js file
 
+// In your Server.js file
 
-
+app.post("/check-user", async (req, res) => {
+    const { email } = req.body;
+    try {
+        // Check if the user exists in the MongoDB collection
+        const mongoUser = await collection.findOne({ email: email });
+        
+        if (mongoUser) {
+            // User exists in either MongoDB or SQL database
+            const userType = mongoUser.userType;
+            res.json({ exists: true, userType: userType });
+        } else {
+            // User does not exist
+            res.json({ exists: false });
+        }
+    } catch (error) {
+        console.error("Error checking user:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 
 // SQL Server signup endpoint
 app.post("/signup-sqlserver", (req, res) => {
@@ -216,6 +241,31 @@ app.post('/api/transactions', (req, res) => {
     });
 });
 
+// Endpoint to handle user login
+app.post("/login-user", async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        // Check if the user exists in the MongoDB collection
+        const mongoUser = await collection.findOne({ email: email });
+        
+        if (mongoUser) {
+            // User exists, now check if the password matches
+            if (mongoUser.password === password) {
+                // Password matches, send success response
+                res.json("success");
+            } else {
+                // Password doesn't match, send error response
+                res.json("incorrect");
+            }
+        } else {
+            // User does not exist, send error response
+            res.json("notexist");
+        }
+    } catch (error) {
+        console.error("Error logging in user:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 
 
 

@@ -55,7 +55,7 @@ function Home() {
         <div className="hero-content">
           <h1 className="shivam"><TypingAnimation text="Welcome to Our Agricultural Trading Platform" delay={100} loop={true} speed={120} className="shivam" />
         </h1>
-          <p>Connecting farmers and buyers for sustainable agriculture</p>
+          <p style={{ color: 'white' }}>Connecting farmers and buyers for sustainable agriculture</p>
           {isLoggedIn ? null : (
           <div className="hero-buttons">
             <button className="login-btn" onClick={handleJoinNowClick}>Join Now!</button>
