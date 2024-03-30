@@ -164,6 +164,19 @@ app.get("/api/products", (req, res) => {
 });
 
 
+
+app.delete('/api/cart/:productId', (req, res) => {
+    const productIdToDelete = req.params.productId;
+    const index = cartItems.findIndex(item => item.productId === productIdToDelete);
+    if (index !== -1) {
+        cartItems.splice(index, 1);
+        res.status(200).json({ message: 'Item deleted from cart successfully' });
+    } else {
+        res.status(404).json({ error: 'Item not found in cart' });
+    }
+});
+
+
 cartItems = [];
 
 app.post('/api/cart/add', (req, res) => {
@@ -198,48 +211,33 @@ app.post('/api/cart/add', (req, res) => {
     });
 });
 
-app.delete('/api/cart/:productId', (req, res) => {
-    const productIdToDelete = req.params.productId;
-    const index = cartItems.findIndex(item => item.productId === productIdToDelete);
-    if (index !== -1) {
-        cartItems.splice(index, 1);
-        res.status(200).json({ message: 'Item deleted from cart successfully' });
-    } else {
-        res.status(404).json({ error: 'Item not found in cart' });
-    }
-});
-
-
 app.post('/api/transactions', (req, res) => {
-    const { price, trans_date, quantity, products } = req.body;
-  
-    // Insert transaction details into the transactions table
-    const insertTransactionQuery = 'INSERT INTO transactions (price, trans_date, quantity) VALUES (?, ?, ?)';
-    connection.query(insertTransactionQuery, [price, trans_date, quantity], (err, result) => {
-      if (err) {
-        console.error('Error inserting transaction details:', err);
-        return res.status(500).json({ error: 'Internal server error' });
-      }
-  
-      // Get the transaction ID of the inserted transaction
-      const transactionId = result.insertId;
-  
-      // Insert product IDs and transaction ID into the transaction_products table
-      const insertTransactionProductsQuery = 'INSERT INTO transaction_products(transaction_id, product_id) VALUES ?';
-      
-      // Create an array of arrays containing the transaction ID and each product ID
-      const values = products.map(productId => [transactionId, productId]);
-      
-      connection.query(insertTransactionProductsQuery, [values], (err, result) => {
+    const { products } = req.body;
+
+    // Construct the values to be inserted into the transactions table
+    const values = products.map(product => [
+        product.price, // Price for the product
+        new Date().toISOString().slice(0, 10), // Current date
+        product.quantity,
+        product.product_id
+    ]);
+
+    // Insert the transaction details and product IDs into the transactions table
+    const insertTransactionQuery = 'INSERT INTO transactions (price, trans_date, quantity, product_id) VALUES ?';
+
+    connection.query(insertTransactionQuery, [values], (err, result) => {
         if (err) {
-          console.error('Error inserting transaction products:', err);
-          return res.status(500).json({ error: 'Internal server error' });
+            console.error('Error inserting transaction details:', err);
+            return res.status(500).json({ error: 'Internal server error' });
         }
-  
+
         res.status(200).json({ message: 'Transaction completed successfully' });
-      });
     });
 });
+
+
+
+
 
 // Endpoint to handle user login
 app.post("/login-user", async (req, res) => {

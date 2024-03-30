@@ -3,10 +3,15 @@ import axios from 'axios';
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [totalCost, setTotalCost] = useState(0);
 
   useEffect(() => {
     fetchCartItems();
   }, []);
+
+  useEffect(() => {
+    calculateTotalCost();
+  }, [cartItems]);
 
   const fetchCartItems = async () => {
     try {
@@ -17,36 +22,42 @@ const CartPage = () => {
     }
   };
 
-  // const navigateTo = (path) => {
-  //   window.location.href = path; // Use window.location.href to redirect
-  // };
+  const calculateTotalCost = () => {
+    let total = 0;
+    cartItems.forEach(item => {
+      total += item.pprice * item.quantity;
+    });
+    setTotalCost(total);
+  };
 
   const handleBuy = async () => {
     try {
-      // Calculate total price and quantity
-      let totalPrice = 0;
-      let totalQuantity = 0;
+      // Aggregate total price for each product ID
+      const totalPriceMap = {};
       cartItems.forEach(item => {
-        totalPrice += item.pprice * item.quantity;
-        totalQuantity += item.quantity;
+        const totalPrice = item.pprice * item.quantity;
+        if (totalPriceMap[item.product_id]) {
+          totalPriceMap[item.product_id] += totalPrice;
+        } else {
+          totalPriceMap[item.product_id] = totalPrice;
+        }
       });
 
       // Prepare transaction data
       const transactionData = {
-        price: totalPrice,
-        trans_date: new Date().toISOString().slice(0, 10), // Current date
-        quantity: totalQuantity,
-        products: cartItems.map(item => item.productId) // Array of product ids
-        // You may also need to include buyer_id if you have a logged-in user system
+        products: Object.keys(totalPriceMap).map(productId => ({
+          product_id: parseInt(productId),
+          quantity: 1, // Assuming each product occurs only once in the transaction
+          price: totalPriceMap[productId]
+        }))
       };
 
       // Send transaction data to the backend to store in the database
       const response = await axios.post('http://localhost:5000/api/transactions', transactionData);
       console.log(response.data.message); // Log success message
       // Clear the cart after successful transaction
-       // Redirect to homepage
       setCartItems([]);
-      window.location.href = '/';
+      alert('Items bought successfully!'); // Display success message
     } catch (error) {
       console.error('Error processing transaction:', error);
     }
@@ -64,6 +75,7 @@ const CartPage = () => {
           </div>
         ))}
       </div>
+      <p><strong>Total Cost:</strong> ₹{totalCost}</p>
       <button onClick={handleBuy}>Buy</button>
     </div>
   );
