@@ -265,6 +265,24 @@ app.post("/login-user", async (req, res) => {
     }
 });
 
+// Endpoint to fetch buyer ID using buyer email
+app.get("/api/buyer-id", async (req, res) => {
+    const { email } = req.query;
+    try {
+        // Query the database to find the buyer ID associated with the email
+        const result = await connection.query('SELECT buyer_id FROM buyer WHERE bemail = ?', [email]);
+        if (result.length > 0) {
+            // Buyer found, send the buyer ID in the response
+            res.json({ buyerId: result[0].buyer_id });
+        } else {
+            // Buyer not found
+            res.status(404).json({ message: 'Buyer not found' });
+        }
+    } catch (error) {
+        console.error("Error fetching buyer ID:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 
 
 app.get('/api/cart', (req, res) => {
