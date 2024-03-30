@@ -23,8 +23,9 @@ app.post("/", async (req, res) => {
     }
 });
 
+// MongoDB signup endpoint
 app.post("/signup-mongodb", async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, userType } = req.body; // Include userType from request body
     try {
         // Check if user with the given email already exists
         const existingUser = await collection.findOne({ email: email });
@@ -34,7 +35,8 @@ app.post("/signup-mongodb", async (req, res) => {
             // Create a new user document
             const newUser = new collection({
                 email: email,
-                password: password
+                password: password,
+                userType: userType // Add userType to the user document
             });
             // Save the new user to the database
             await newUser.save();
@@ -49,33 +51,43 @@ app.post("/signup-mongodb", async (req, res) => {
 
 
 
+
+// SQL Server signup endpoint
 app.post("/signup-sqlserver", (req, res) => {
-    const { email, contactNo, fname, minit, lname } = req.body;
-    // Check if user with the given email already exists in the database
-    connection.query('SELECT * FROM farmers WHERE email = ?', [email], (error, results) => {
-        if (error) {
-            console.error("Error selecting user:", error);
-            return res.status(500).json({ error: "Internal server error" });
-        }
-        if (results.length > 0) {
-            // User already exists
-            return res.status(400).json("exist");
-        } else {
-            // User does not exist, insert new user into database
-            connection.query('INSERT INTO farmers (email, contact_no, fname, minit, lname) VALUES (?, ?, ?, ?, ?)',
-                [email, contactNo, fname, minit, lname],
-                (error, results) => {
-                    if (error) {
-                        console.error("Error inserting user:", error);
-                        return res.status(500).json({ error: "Internal server error" });
-                    }
-                    // User signed up successfully
-                    return res.json("notexist");
-                });
-        }
-    });
+    const { email, contactNo, fname, minit, lname, userType } = req.body; // Include userType from request body
+
+    // Check the userType and execute corresponding SQL query
+    if (userType === 'farmer') {
+        // SQL query to insert a new farmer
+        connection.query('INSERT INTO farmers (email, contact_no, fname, minit, lname) VALUES (?, ?, ?, ?, ?)',
+            [email, contactNo, fname, minit, lname],
+            (error, results) => {
+                if (error) {
+                    console.error("Error inserting farmer:", error);
+                    return res.status(500).json({ error: "Internal server error" });
+                }
+                // Farmer signed up successfully
+                return res.json("notexist");
+            });
+    } else if (userType === 'buyer') {
+        // SQL query to insert a new buyer
+        connection.query('INSERT INTO buyer (bemail, bcontact, bfname, bminit, blname) VALUES (?, ?, ?, ?, ?)',
+            [email, contactNo, fname, minit, lname], // Adjust column names as per your schema
+            (error, results) => {
+                if (error) {
+                    console.error("Error inserting buyer:", error);
+                    return res.status(500).json({ error: "Internal server error" });
+                }
+                // Buyer signed up successfully
+                return res.json("notexist");
+            });
+    } else {
+        // Invalid userType
+        return res.status(400).json({ error: "Invalid user type" });
+    }
 });
 
+// Other endpoints and server initialization (not shown for brevity)
 // Endpoint to add a new product
 app.post("/api/products", async (req, res) => {
     const { pname, pquality, pquantity, pprice, pdomain, farmer_id } = req.body;
