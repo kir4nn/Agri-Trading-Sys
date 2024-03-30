@@ -1,0 +1,847 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+
+/* Navbar Styles */
+.navbar {
+  display: flex;
+  justify-content: space-between; /* Evenly distribute links horizontally */
+  align-items: center; /* Align content vertically */
+  padding-top: 25px ;
+
+  border-top: 0cm;
+  padding-bottom: 25px; /* Add some padding inside the navbar */
+  background-color:#000000; /* Light background color */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  position: fixed; /* Fix the navbar to the top of the page */
+  top: 0;
+  left: 0;
+  width: 100%; /* Make the navbar full width */
+  z-index: 10; /* Ensure the navbar stays on top of other elements */
+}
+
+.nav-link {
+
+  padding: 15px 15px;
+  color: white; /* Dark text color for better readability */
+  text-decoration: none; /* Remove underline from links */
+  font-size: 20px; /* Set font size for navigation links */
+  padding: 0 10px; /* Add some padding between links */
+  transition: color 0.3s ease-in-out; /* Smooth transition on hover */
+}
+
+.nav-link:hover {
+  color: #45a049; /* Slightly darker color on hover */
+  font-weight: bold; /* Make hovered link bolder for emphasis */
+}
+
+
+/* General Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Removed background color as image covers the area */
+  /* Optional: Set a background color if desired */
+  background-image: url('images/banner2.avif'); /* Replace with your actual image path */
+  height: 100vh; /* Set height to 100vh for full screen */
+  width: 100%;
+  overflow: hidden;
+  background-size: cover; /* Prevent content from overflowing the image */
+}
+
+.hero-image {
+  /* Removed width, height, and margin-left styles */
+  width :100%;
+  object-fit: cover; /* Cover the entire area of the .hero section */
+  object-position: center; /* Center the image within the .hero section */
+}
+
+/* Add these styles to your App.css file */
+
+/* Add these styles to your App.css file */
+
+.hero-buttons {
+  margin-top: 30px;
+}
+
+.login-btn, .signup-btn {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.login-btn:hover, .signup-btn:hover {
+  background-color: #45a049; /* Darker Green */
+}
+
+.signup-btn {
+  margin-left: 10px; /* Add margin to separate buttons */
+}
+
+
+
+/* Other sections remain unchanged */
+
+.shivam{
+  font-size: 10rem;
+  color:white;
+}
+
+.shivam:hover{
+  color: #45a049;
+}
+
+.hero-content {
+  max-width: 600px;
+  text-align: center;
+ color: white;
+ font-size: 1rem;
+}
+
+.hero-content h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.hero-content p {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+
+
+/* About Us Section */
+/* About Us Section */
+.about {
+  padding: 50px 0; /* Add some top and bottom padding */
+  text-align: center; /* Center the content horizontally */
+}
+
+.about h2 {
+  font-size: 36px; /* Set a larger font size for the heading */
+  margin-bottom: 20px; /* Add some space between the heading and paragraph */
+}
+
+.about p {
+  font-size: 16px; /* Set a base font size for the paragraph */
+  line-height: 1.5; /* Increase line spacing for better readability */
+}
+
+/* Benefits Section */
+.benefits {
+  text-align: center;
+  padding: 50px 0;
+}
+
+.benefits h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.benefits h2:hover {
+color:#45a049
+}
+.benefits .benefit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.benefits .benefit img {
+  width: 400px; /* Adjust as needed */
+  height: 400px; /*djust as needed */
+  margin-bottom: 20px;
+}
+
+.benefits .benefit p {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Optional hover effect */
+.benefits .benefit:hover {
+  transform: translateY(-5px);
+  transition: transform 0.3s ease;
+}
+
+
+/* How it Works Section */
+.how-it-works {
+  padding: 50px 20px; /* Padding around the content */
+  text-align: center; /* Center-align the text */
+}
+
+.how-it-works h2 {
+  font-size: 36px;
+  margin-bottom: 20px; /* Bottom margin for the heading */
+   /* Heading color */
+}
+
+
+
+.how-it-works h2 :hover{
+  color:#45a049
+}
+.steps {
+  display: flex; /* Use flexbox layout */
+  justify-content: space-around; /* Distribute items evenly */
+  flex-wrap: wrap; /* Wrap items to the next line if needed */
+}
+
+.step {
+  flex-basis: calc(33.33% - 20px); /* Each step occupies one-third of the container width */
+  margin-bottom: 20px; /* Bottom margin for each step */
+}
+
+.step img {
+  max-width: 100%; /* Ensure images don't exceed their container */
+  margin-bottom: 10px; /* Bottom margin for images */
+}
+
+.step p {
+  color: #6c757d; /* Text color */
+}
+
+
+/* Testimonials Section */
+.testimonials {
+  padding: 50px 0;
+  text-align: center;
+}
+
+.testimonials h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.testimonials h2 :hover{
+  color:#45a049;
+}
+
+.testimonial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.testimonial p {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.testimonial cite {
+  font-size: 18px;
+  font-style: normal;
+}
+
+/* Contact Section */
+.contact {
+  background-color: #f8f9fa; /* Background color */
+  padding: 50px 20px; /* Padding around the content */
+  text-align: center; /* Center-align the text */
+}
+
+.contact h2 {
+  font-size: 36px;
+  margin-bottom: 20px; /* Bottom margin for the heading */
+  color: #343a40; /* Heading color */
+}
+
+.contact h2 :hover{
+  color:#45a049;
+}
+
+.contact p {
+  margin-bottom: 30px; /* Bottom margin for the paragraph */
+  color: #6c757d; /* Text color */
+}
+
+.contact form {
+  max-width: 400px; /* Set maximum width for the form */
+  margin: 0 auto; /* Center the form horizontally */
+}
+
+.contact input[type="text"],
+.contact input[type="email"],
+.contact textarea {
+  width: 100%; /* Full width for input fields */
+  padding: 10px; /* Padding for input fields */
+  margin-bottom: 20px; /* Bottom margin for input fields */
+  border: 1px solid #ced4da; /* Border color */
+  border-radius: 5px; /* Border radius */
+  box-sizing: border-box; /* Include padding and border in element's total width */
+}
+
+.contact textarea {
+  height: 120px; /* Set height for textarea */
+}
+
+.contact button[type="submit"] {
+  background-color: #007bff; /* Button background color */
+  color: #fff; /* Button text color */
+  padding: 10px 20px; /* Padding for the button */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Border radius */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.contact button[type="submit"]:hover {
+  background-color: #0056b3; /* Change background color on hover */
+}
+
+
+footer {
+  background-color: #f8f9fa; /* Background color */
+  padding: 20px; /* Padding around the content */
+  text-align: center; /* Center-align the text */
+  font-size: 14px; /* Font size */
+  color: #6c757d; /* Text color */
+}
+
+footer p {
+  margin: 0; /* Remove default margin */
+}
+
+/* Optional: Add hover effect */
+footer:hover {
+  background-color: #e9ecef; /* Change background color on hover */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+
+/* app.css */
+
+/* Global styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+/* 
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+} */
+
+/* Navigation styles */
+nav {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 0;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Dashboard content styles */
+.dashboard-content {
+  margin-top: 20px;
+}
+
+.dashboard-section {
+  margin-bottom: 40px;
+}
+
+.dashboard-section h2 {
+  margin-bottom: 10px;
+}
+
+/* Product list styles */
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
+}
+
+.product-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+/* Notifications styles */
+.notifications {
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
+.notification-item {
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  background-color: #f5f5f5;
+}
+
+.login h1 {
+  align-items: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.login form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login input[type="email"],
+.login input[type="password"],
+.login input[type="submit"] {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  width: 500px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.login input[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login input[type="submit"]:hover {
+  width : 150px;
+  background-color: #0056b3;
+}
+
+.login p {
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.login a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.login a:hover {
+  color: #0056b3;
+}
+
+.login select {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  /* width: 300px; */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  background-color: #fff;
+  font-size: 1rem;
+}
+
+.login select:focus {
+  border-color: #007bff;
+}
+
+/* App.css */
+
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.farmer-dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboard-content {
+  max-width: 800px;
+  width: 100%;
+  margin: 20px;
+}
+
+.dashboard-section {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* Navigation styles */
+.navigation {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 0;
+  width: 100%;
+  text-align: center;
+}
+
+.navigation a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.navigation a:hover {
+  text-decoration: underline;
+}
+
+/* Form styles */
+input[type="text"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Product list styles */
+.product-item {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.product-item:last-child {
+  border-bottom: none;
+}
+
+/* Notifications styles */
+.notifications {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* App.css */
+/* App.css */
+
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.buyer-dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboard-content {
+  max-width: 800px;
+  width: 100%;
+  margin: 20px;
+}
+
+.dashboard-section {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* Header styles */
+h1 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Product list styles */
+.available-products {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.product-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.product-item {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.product-item:last-child {
+  border-bottom: none;
+}
+
+.product-name {
+  font-weight: bold;
+}
+
+.product-price {
+  color: #007bff;
+}
+
+
+.signup {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.signup h1 {
+  text-align: center;
+  color: #333;
+}
+
+.signup form {
+  margin-top: 20px;
+}
+
+.signup input[type="email"],
+.signup input[type="password"],
+.signup input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.signup input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.signup input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.signup p {
+  text-align: center;
+}
+
+.signup p > a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.signup p > a:hover {
+  text-decoration: underline;
+}
+
+
+.buyer-dashboard {
+  padding: 20px;
+}
+
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.product-list-item {
+  flex: 1 0 25%; /* Responsive sizing for smaller screens */
+  margin: 10px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+}
+
+.product-list-item h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.product-list-item p {
+  margin-bottom: 5px;
+  font-size: 14px; /* Adjust for readability */
+}
+
+.product-list-item p:last-child {
+  margin-bottom: 0;
+}
+
+.product-list-item .pdomain,
+.product-list-item .farmer_id {
+  color: #888; /* Subdued colors for less-important info */
+}
+
+.product-list-item .pprice {
+  font-weight: bold;
+}
+
+
+/* App.css */
+
+
+nav ul li a {
+  text-decoration: none;
+  color: black;
+}
+
+nav ul li a:hover {
+  color: blue; /* Change color on hover */
+  font-weight: bold; /* Example: Change font weight on hover */
+}
+
+
+.shopping-cart-icon {
+  width: 40px;
+  height: 40px;
+  margin-left: auto;
+}
+
+.shopping-cart-wrapper {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+}
+
+.shopping-cart-icon-wrapper {
+  width: 40px; /* Adjust the size of the wrapper */
+  height: 40px;
+  border-radius: 100%; /* Create a circular border */
+  background-color: #6c757d; /* Set background color of the circle */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Add a shadow effect */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.shopping-cart-icon-wrapper:hover {
+  background-color: #495057; /* Change background color on hover */
+}
+
+/* Style for the cart items container */
+.cart-items {
+  margin-top: 20px;
+}
+
+/* Style for each cart item */
+.cart-item {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+/* Style for the buy button */
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+/* Hover effect for the buy button */
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Style for the page title */
+h1 {
+  color: #333;
+}
+
+/* Style for the cart item title */
+h3 {
+  color: #007bff;
+}
+
+/* Style for quantity and price */
+p {
+  color: #555;
+}
