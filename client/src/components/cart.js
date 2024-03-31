@@ -45,7 +45,7 @@ const CartPage = () => {
     try {
       const totalPriceMap = {};
       let transactionTotal = 0; // Variable to store total cost for this transaction
-
+  
       cartItems.forEach(item => {
         const totalPrice = item.pprice * item.quantity;
         transactionTotal += totalPrice; // Accumulate total cost for this transaction
@@ -55,28 +55,29 @@ const CartPage = () => {
           totalPriceMap[item.product_id] = totalPrice;
         }
       });
-
+  
       const transactionData = {
-        products: Object.keys(totalPriceMap).map(productId => ({
-          product_id: parseInt(productId),
-          quantity: 1,
-          price: totalPriceMap[productId],
+        products: cartItems.map(item => ({
+          product_id: item.product_id,
+          quantity: item.quantity, // Use the quantity from each cart item
+          price: item.pprice * item.quantity, // Calculate the price for each product
           buyer_id: bId,
         }))
       };
-
+  
       const response = await axios.post('http://localhost:5000/api/transactions', transactionData);
       console.log(response.data);
-
+  
       setTransactionReceipt(response.data);
       setTransactionTotalCost(transactionTotal); // Store total cost for this transaction
-
+  
       setCartItems([]);
       alert('Items bought successfully!');
     } catch (error) {
       console.error('Error processing transaction:', error);
     }
   };
+  
 
   return (
     <div>
@@ -102,7 +103,7 @@ const CartPage = () => {
             {transactionReceipt.products.map(product => (
               <li key={product.product_id}>
                 <p><strong>Name:</strong> {product.pname}</p>
-                <p><strong>Quantity:</strong> {product.quantity}</p>
+                <p><strong>Quantity:</strong> {product.pquantity}</p>
                 <p><strong>Price:</strong> ₹{product.pprice}</p>
               </li>
             ))}
