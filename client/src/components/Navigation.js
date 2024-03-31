@@ -12,10 +12,8 @@ const Navigation = () => {
 
   return (
     <nav>
-      <ul>
+      <ul style={{color:'white'}}>
         <li><a href="/">Home</a></li>
-        <li><a href="/profile">Profile</a></li>
-        <li><a href="/orders">Orders</a></li>
         <li><a href="/" onClick={handleLogout}>Logout</a></li>
         {/* Replace '/' with actual logout endpoint if needed */}
       </ul>

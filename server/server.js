@@ -79,13 +79,22 @@ app.post("/check-user", async (req, res) => {
 
 // SQL Server signup endpoint
 app.post("/signup-sqlserver", (req, res) => {
-    const { email, contactNo, fname, minit, lname, userType } = req.body; // Include userType from request body
+    const { email, contactNo, fname, minit, lname, userType, location } = req.body; // Include userType from request body
 
     // Check the userType and execute corresponding SQL query
     if (userType === 'farmer') {
         // SQL query to insert a new farmer
         connection.query('INSERT INTO farmers (email, contact_no, fname, minit, lname) VALUES (?, ?, ?, ?, ?)',
             [email, contactNo, fname, minit, lname],
+            (error, results) => {
+                if (error) {
+                    console.error("Error inserting farmer:", error);
+                    return res.status(500).json({ error: "Internal server error" });
+                }
+                
+            });
+        connection.query('INSERT INTO farm_location (location) VALUES (?)',
+            [location],
             (error, results) => {
                 if (error) {
                     console.error("Error inserting farmer:", error);

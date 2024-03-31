@@ -114,11 +114,11 @@ function Home() {
         <h2>Testimonials</h2>
         <div className="testimonial">
           <p>"The platform helped me sell my farm produce directly to customers, increasing my profits."</p>
-          <cite>- John Doe</cite>
+          <cite>- Rajesh Kumar B S</cite>
         </div>
         <div className="testimonial">
           <p>"I love the convenience of buying fresh vegetables from local farmers. Great initiative!"</p>
-          <cite>- Jane Smith</cite>
+          <cite>- Rohan Malli</cite>
         </div>
       </section>
 

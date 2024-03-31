@@ -10,6 +10,7 @@ function Signup() {
     const [fname, setFname] = useState('');
     const [minit, setMinit] = useState('');
     const [lname, setLname] = useState('');
+    const [location, setLocation] = useState('');
     const [userType, setUserType] = useState(''); // Define userType state
 
     // Validation state
@@ -47,7 +48,7 @@ function Signup() {
 
         try {
             const mongoData = { email, password, userType };
-            const sqlData = { email, contactNo, fname, minit, lname, userType }; // Include userType in SQL data
+            const sqlData = { email, contactNo, fname, minit, lname, userType, location }; // Include userType in SQL data
 
             await axios.post("http://localhost:5000/signup-mongodb", mongoData)
                 .then(async (res) => {
@@ -87,7 +88,9 @@ function Signup() {
                 <input type="text" onChange={(e) => setFname(e.target.value)} placeholder="First Name" />
                 <input type="text" onChange={(e) => setMinit(e.target.value)} placeholder="Middle Initial" />
                 <input type="text" onChange={(e) => setLname(e.target.value)} placeholder="Last Name" />
-                <select value={userType} onChange={(e) => setUserType(e.target.value)}> {/* Dropdown for user type */}
+                <input type="text" onChange={(e) => setLocation(e.target.value)} placeholder="Location" />
+                <select value={userType} onChange={(e) => setUserType(e.target.value)}
+                    style={{marginBottom:10}}> {/* Dropdown for user type */}
                     <option value="" disabled>Select user type</option>
                     <option value="farmer">Farmer</option>
                     <option value="buyer">Buyer</option>

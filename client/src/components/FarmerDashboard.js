@@ -229,10 +229,10 @@ const FarmerDashboard = () => {
                     <h2>Your Products</h2>
                     <ProductList products={products} loggedInFarmerId={farmerId} />
                 </div>
-                <div className="dashboard-section">
+                {/* <div className="dashboard-section">
                     <h2>Notifications</h2>
                     <Notifications />
-                </div>
+                </div> */}
             </div>
         </div>
     );

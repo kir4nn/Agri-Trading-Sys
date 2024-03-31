@@ -173,10 +173,13 @@ color:#45a049
 }
 
 .benefits .benefit img {
-  width: 400px; /* Adjust as needed */
-  height: 400px; /*djust as needed */
+  max-width: 400px; /* Adjust as needed */
+  max-height: 800px; /* Adjust as needed */
+  width: auto; /* Ensures aspect ratio is maintained */
+
   margin-bottom: 20px;
 }
+
 
 .benefits .benefit p {
   font-size: 16px;
@@ -363,12 +366,14 @@ nav {
 nav ul {
   list-style-type: none;
   margin: 0;
+  color: #fff;
   padding: 0;
 }
 
 nav ul li {
   display: inline-block;
   margin-right: 20px;
+  color: #fff;
 }
 
 nav ul li a {
@@ -451,7 +456,7 @@ nav ul li a {
   color: #fff;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, width 0.3s ease;
 }
 
 .login input[type="submit"]:hover {
