@@ -456,7 +456,7 @@ nav ul li a {
   color: #fff;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease, width 0.3s ease;
+  transition: background-color 0.6s ease, width 0.6s ease;
 }
 
 .login input[type="submit"]:hover {
@@ -770,11 +770,11 @@ h1 {
 
 nav ul li a {
   text-decoration: none;
-  color: black;
+  color: white;
 }
 
 nav ul li a:hover {
-  color: blue; /* Change color on hover */
+  color: green; /* Change color on hover */
   font-weight: bold; /* Example: Change font weight on hover */
 }
 

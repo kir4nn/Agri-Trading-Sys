@@ -7,7 +7,7 @@ import './App.css';
 import React from 'react';
 import FarmerDashboard from './components/FarmerDashboard';
 import BuyerDashboard from './components/BuyerDashboard';
-import HomeIcon from './images/home-solid.svg';
+import HomeIcon from './images/homee.png'
 import CartPage from './components/cart';
 import PrivateRoutes from "./utils/PrivateRoutes";
 
