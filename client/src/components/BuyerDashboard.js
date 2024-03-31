@@ -94,7 +94,11 @@ const BuyerDashboard = () => {
             
           </div>
         ))}
+        
       </div>
+      <Link to={`/cart/${buyerId}`} className="shopping-cart-link">
+          <button style={{marginTop:20}}>Go To Cart</button>
+        </Link>
     </div>
   );
 }
