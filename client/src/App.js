@@ -9,8 +9,10 @@ import FarmerDashboard from './components/FarmerDashboard';
 import BuyerDashboard from './components/BuyerDashboard';
 import HomeIcon from './images/home-solid.svg';
 import CartPage from './components/cart';
+import PrivateRoutes from "./utils/PrivateRoutes";
 
 function App() {
+  const [token, setToken] = useState(false);
   return (
     <div className="App">
       <Router>
@@ -24,13 +26,14 @@ function App() {
     </nav>
 
           <Routes>
-            {/* <Route path="/login" element={<Login/>}/> */}
+            <Route exact path="/login" element={<Login setToken={setToken} />} />
+            <Route element={<PrivateRoutes token={token}/>}>
+              <Route path="/farmer-dashboard/:fEmail" element={<FarmerDashboard />} />
+              <Route path="/buyer-dashboard/:bEmail" element={<BuyerDashboard />} />
+            </Route>
             <Route path="/" element={<Home/>}/>
             <Route path="/signup" element={<Signup/>}/>
             
-            <Route exact path="/login" element={<Login/>} />
-            <Route path="/farmer-dashboard/:fEmail" element={<FarmerDashboard />} />
-            <Route path="/buyer-dashboard/:bEmail" element={<BuyerDashboard />} />
             <Route path="/cart/:bId" element={<CartPage/>} />
           </Routes>
         </div>
