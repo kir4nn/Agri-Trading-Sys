@@ -30,9 +30,9 @@ function Login() {
                     if (loginRes.data === "success") {
                         // Redirect to dashboard based on userType
                         if (userType === 'farmer') {
-                            history("/farmer-dashboard", { state: { id: email } });
+                            history(`/farmer-dashboard/${email}`);
                         } else if (userType === 'buyer') {
-                            history("/buyer-dashboard", { state: { id: email } });
+                            history(`/buyer-dashboard/${email}`);
                         } else {
                             alert("Invalid user type");
                         }
@@ -63,8 +63,7 @@ function Login() {
                     <option value="buyer">Buyer</option>
                 </select>
                 <br />
-                {userType === 'buyer' && <Link to={`/buyer-dashboard/${email}`}><input type="submit" value="Login" /></Link>}
-                {userType === 'farmer' && <Link to={`/farmer-dashboard/${email}`}><input type="submit" value="Login" /></Link>}
+                <input type="submit" value="Login" />
             </form>
             <p>Don't have an Account?<Link to="/signup">Signup</Link></p>
         </div>
