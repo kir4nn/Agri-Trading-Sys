@@ -76,7 +76,7 @@ const CartPage = () => {
         ))}
       </div>
       <p><strong>Total Cost:</strong> ₹{totalCost}</p>
-      <button onClick={handleBuy}>Buy</button>
+      {cartItems.length > 0 && <button onClick={handleBuy}>Buy</button>} {/* Render the button only if there are items in the cart */}
     </div>
   );
 };

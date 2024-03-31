@@ -268,6 +268,7 @@ app.post("/login-user", async (req, res) => {
 // Endpoint to fetch buyer ID using buyer email
 app.get("/api/buyer-id", async (req, res) => {
     const { email } = req.query;
+    console.log("this is email", email)
     try {
         // Query the database to find the buyer ID associated with the email
         const result = await connection.query('SELECT buyer_id FROM buyer WHERE bemail = ?', [email]);

@@ -11,9 +11,12 @@ const BuyerDashboard = () => {
   const [products, setProducts] = useState([]);
   const location = useLocation();
 
+  // console.log(location.state)
+
   useEffect(() => {
     // Extract buyer email from the location state
     const { email } = location.state;
+    console.log("email in useeffect", email)
     setBuyerEmail(email);
 
     // Fetch the buyer ID using the buyer email
@@ -23,8 +26,9 @@ const BuyerDashboard = () => {
   }, []);
 
   const fetchBuyerId = async (email) => {
+    console.log("email in dashboard",email)
     try {
-      const response = await axios.get(`http://localhost:5000/api/buyer-id?email=${email}`);
+      const response = await axios.get(`http://localhost:5000/api/buyer-id`, {params:{email}});
       setBuyerId(response.data.buyerId);
     } catch (error) {
       console.error('Error fetching buyer ID:', error);
@@ -44,10 +48,12 @@ const BuyerDashboard = () => {
     try {
       const response = await axios.post('http://localhost:5000/api/cart/add', {
         productId: product.product_id,
-        quantity: product.pquantity // You can adjust the quantity as needed
+        quantity: product.pquantity
       });
       console.log(response.data.message);
-      // navigateTo('/cart'); // Utilize the custom navigation function
+      
+      // Filter out the product from the products state array
+      setProducts(prevProducts => prevProducts.filter(p => p.product_id !== product.product_id));
     } catch (error) {
       console.error('Error adding item to cart:', error);
     }
