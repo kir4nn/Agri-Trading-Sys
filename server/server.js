@@ -211,6 +211,7 @@ app.post('/api/cart/add', (req, res) => {
     });
 });
 
+// Endpoint to handle transactions and delete bought products
 app.post('/api/transactions', (req, res) => {
     const { products } = req.body;
 
@@ -232,10 +233,22 @@ app.post('/api/transactions', (req, res) => {
             return res.status(500).json({ error: 'Internal server error' });
         }
 
-        res.status(200).json({ message: 'Transaction completed successfully' });
+        // Transaction completed successfully, now delete the bought products
+        const productIds = products.map(product => product.product_id);
+        const deleteProductsQuery = 'DELETE FROM products WHERE product_id IN (?)';
+        connection.query(deleteProductsQuery, [productIds], (deleteErr, deleteResult) => {
+            if (deleteErr) {
+                console.error('Error deleting bought products:', deleteErr);
+                return res.status(500).json({ error: 'Internal server error' });
+            }
+
+            // Products deleted successfully
+            console.log('Deleted products:', productIds);
+            res.status(200).json({ message: 'Transaction completed successfully' });
+        });
     });
-    cartItems = [];
 });
+
 
 // Endpoint to handle user login
 app.post("/login-user", async (req, res) => {
