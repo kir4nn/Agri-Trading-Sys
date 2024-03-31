@@ -214,7 +214,7 @@ const FarmerDashboard = () => {
                     <input
                         type="text"
                         placeholder="Farmer ID"
-                        value={farmerId}
+                        value={`Farmer ID: ${farmerId}`}
                         readOnly
                         style={{ color: '#808080', // Set the color to grey
                             userSelect: 'none', // Disable text selection

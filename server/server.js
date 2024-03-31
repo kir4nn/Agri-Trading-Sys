@@ -216,14 +216,15 @@ app.post('/api/transactions', (req, res) => {
 
     // Construct the values to be inserted into the transactions table
     const values = products.map(product => [
+        product.buyer_id,
         product.price, // Price for the product
         new Date().toISOString().slice(0, 10), // Current date
         product.quantity,
-        product.product_id
+        product.product_id,
     ]);
 
     // Insert the transaction details and product IDs into the transactions table
-    const insertTransactionQuery = 'INSERT INTO transactions (price, trans_date, quantity, product_id) VALUES ?';
+    const insertTransactionQuery = 'INSERT INTO transactions (buyer_id, price, trans_date, quantity, product_id) VALUES ?';
 
     connection.query(insertTransactionQuery, [values], (err, result) => {
         if (err) {
@@ -233,6 +234,7 @@ app.post('/api/transactions', (req, res) => {
 
         res.status(200).json({ message: 'Transaction completed successfully' });
     });
+    cartItems = [];
 });
 
 // Endpoint to handle user login

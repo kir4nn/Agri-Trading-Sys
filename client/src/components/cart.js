@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalCost, setTotalCost] = useState(0);
+
+  const { bId } = useParams();
 
   useEffect(() => {
     fetchCartItems();
@@ -13,14 +16,23 @@ const CartPage = () => {
     calculateTotalCost();
   }, [cartItems]);
 
+  useEffect(() => {
+    // Clear cart items when the component mounts
+    setCartItems([]);
+  }, [bId]); // Empty dependency array ensures this effect runs only once when the component mounts
+
   const fetchCartItems = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/cart');
-      setCartItems(response.data);
+      // Fetch cart items only if cartItems state is empty
+      if (cartItems.length === 0) {
+        const response = await axios.get('http://localhost:5000/api/cart');
+        setCartItems(response.data);
+      }
     } catch (error) {
       console.error('Error fetching cart items:', error);
     }
   };
+  
 
   const calculateTotalCost = () => {
     let total = 0;
@@ -48,7 +60,8 @@ const CartPage = () => {
         products: Object.keys(totalPriceMap).map(productId => ({
           product_id: parseInt(productId),
           quantity: 1, // Assuming each product occurs only once in the transaction
-          price: totalPriceMap[productId]
+          price: totalPriceMap[productId],
+          buyer_id: bId,
         }))
       };
 

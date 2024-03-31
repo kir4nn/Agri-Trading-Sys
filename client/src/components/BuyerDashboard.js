@@ -10,7 +10,6 @@ const BuyerDashboard = () => {
   const [buyerId, setBuyerId] = useState('');
   const [buyerEmail, setBuyerEmail] = useState('');
   const [products, setProducts] = useState([]);
-  const location = useLocation();
 
   const {bEmail}=useParams()
   // console.log(location.state)
@@ -34,11 +33,15 @@ const BuyerDashboard = () => {
     console.log("email in dashboard",email)
     try {
       const response = await axios.get(`http://localhost:5000/api/buyer-id`, {params:{email}});
-      setBuyerId(response.data.buyerId);
+      console.log("Buyer ID response:", response.data); // Log the response data
+      // Access the buyer_id property from the first element of the array
+      setBuyerId(response.data[0].buyer_id);
     } catch (error) {
       console.error('Error fetching buyer ID:', error);
     }
-  };
+};
+
+
 
   const fetchProducts = async () => {
     try {
@@ -73,7 +76,7 @@ const BuyerDashboard = () => {
   return (
     <div className="buyer-dashboard">
       <div className="shopping-cart-wrapper">
-        <Link to="/cart" className="shopping-cart-link">
+      <Link to={`/cart/${buyerId}`} className="shopping-cart-link">
           <img src={shoppingCartIcon} alt="Shopping Cart" className="shopping-cart-icon" />
         </Link>
       </div>
@@ -88,6 +91,7 @@ const BuyerDashboard = () => {
             <p><strong>Domain:</strong> {product.pdomain}</p>
             <p><strong>Farmer ID:</strong> {product.farmer_id}</p>
             <button onClick={() => addToCart(product)}>Add to Cart</button>
+            
           </div>
         ))}
       </div>

@@ -31,7 +31,7 @@ function App() {
             <Route exact path="/login" element={<Login/>} />
             <Route path="/farmer-dashboard/:fEmail" element={<FarmerDashboard />} />
             <Route path="/buyer-dashboard/:bEmail" element={<BuyerDashboard />} />
-            <Route path="/cart" element={<CartPage/>} />
+            <Route path="/cart/:bId" element={<CartPage/>} />
           </Routes>
         </div>
       </Router>
