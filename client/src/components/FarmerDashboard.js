@@ -3,8 +3,8 @@ import Navigation from './Navigation';
 import ProductList from './ProductList';
 import Notifications from './Notifications';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import '../App.css';
-
 const FarmerDashboard = () => {
     const [productName, setProductName] = useState('');
     const [productQuality, setProductQuality] = useState('');
@@ -25,13 +25,25 @@ const FarmerDashboard = () => {
         farmerId: ''
     });
 
+    
     const [alertMessage, setAlertMessage] = useState('');
-
+    
+    const {fEmail}=useParams()
+    
     useEffect(() => {
         fetchProducts();
+        fetchFarmerId();
     }, []);
 
-    // Rest of the code remains the same...
+    const fetchFarmerId = async () => {
+        try {
+            const response = await axios.get(`/api/farmer-id?email=${fEmail}`);
+            const farmerId = response.data[0].farmer_id;
+            setFarmerId(farmerId);
+        } catch (error) {
+            console.error('Error fetching farmer ID:', error);
+        }
+    };
 
     const checkFormValidity = (name, quality, quantity, price, domain, farmerId) => {
         if (name && quality && quantity && price && domain && farmerId) {
@@ -203,8 +215,12 @@ const FarmerDashboard = () => {
                         type="text"
                         placeholder="Farmer ID"
                         value={farmerId}
-                        onChange={handleFarmerIdChange}
-                        style={{ marginBottom: '10px', display: 'block' }}
+                        readOnly
+                        style={{ color: '#808080', // Set the color to grey
+                            userSelect: 'none', // Disable text selection
+                            pointerEvents: 'none', // Disable pointer events
+                            marginBottom: '10px', display: 'block' }
+                        }
                     />
                     {validationErrors.farmerId && <small style={{ color: 'red' }}>{validationErrors.farmerId}</small>}
                     <button onClick={handleEnlistProduct} disabled={!isFormValid}>Enlist Product</button>

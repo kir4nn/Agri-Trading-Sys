@@ -63,7 +63,8 @@ function Login() {
                     <option value="buyer">Buyer</option>
                 </select>
                 <br />
-                <input type="submit" value="Login" />
+                {userType === 'buyer' && <Link to={`/buyer-dashboard/${email}`}><input type="submit" value="Login" /></Link>}
+                {userType === 'farmer' && <Link to={`/farmer-dashboard/${email}`}><input type="submit" value="Login" /></Link>}
             </form>
             <p>Don't have an Account?<Link to="/signup">Signup</Link></p>
         </div>

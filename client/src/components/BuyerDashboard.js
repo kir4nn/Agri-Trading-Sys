@@ -4,6 +4,7 @@ import '../App.css';
 import axios from 'axios';
 import shoppingCartIcon from '../images/shopping-cart-outline-svgrepo-com.svg';
 import CartPage from './cart'; // Assuming the file name is 'cart.js'
+import { useParams } from 'react-router-dom';
 
 const BuyerDashboard = () => {
   const [buyerId, setBuyerId] = useState('');
@@ -11,19 +12,23 @@ const BuyerDashboard = () => {
   const [products, setProducts] = useState([]);
   const location = useLocation();
 
+  const {bEmail}=useParams()
   // console.log(location.state)
 
   useEffect(() => {
     // Extract buyer email from the location state
-    const { email } = location.state;
-    console.log("email in useeffect", email)
-    setBuyerEmail(email);
+    console.log("email in useeffect", bEmail)
+    setBuyerEmail(bEmail);
 
     // Fetch the buyer ID using the buyer email
-    fetchBuyerId(email);
+    fetchBuyerId(bEmail);
     
     fetchProducts();
   }, []);
+
+  // Console log the buyer ID and email
+  
+  
 
   const fetchBuyerId = async (email) => {
     console.log("email in dashboard",email)
@@ -63,9 +68,7 @@ const BuyerDashboard = () => {
     window.location.href = path; // Use window.location.href to redirect
   };
 
-  // Console log the buyer ID and email
-  console.log('Buyer ID:', buyerId);
-  console.log('Buyer Email:', buyerEmail);
+
 
   return (
     <div className="buyer-dashboard">

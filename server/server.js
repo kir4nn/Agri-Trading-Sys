@@ -235,10 +235,6 @@ app.post('/api/transactions', (req, res) => {
     });
 });
 
-
-
-
-
 // Endpoint to handle user login
 app.post("/login-user", async (req, res) => {
     const { email, password } = req.body;
@@ -269,22 +265,45 @@ app.post("/login-user", async (req, res) => {
 app.get("/api/buyer-id", async (req, res) => {
     const { email } = req.query;
     console.log("this is email", email)
-    try {
-        // Query the database to find the buyer ID associated with the email
-        const result = await connection.query('SELECT buyer_id FROM buyer WHERE bemail = ?', [email]);
-        if (result.length > 0) {
-            // Buyer found, send the buyer ID in the response
-            res.json({ buyerId: result[0].buyer_id });
-        } else {
-            // Buyer not found
-            res.status(404).json({ message: 'Buyer not found' });
-        }
-    } catch (error) {
-        console.error("Error fetching buyer ID:", error);
-        res.status(500).json({ error: "Internal server error" });
-    }
+    const sql="SELECT buyer_id FROM buyer WHERE bemail = ?"
+
+    connection.query(sql, [email], (err, result)=>{
+        if(err){
+            console.error("Error fetching id with email from MySQL:", err.message);
+            res.status(500).json({ error: err.message });
+        }else {
+            if (result.length == 0) {
+                console.log('No id found with the specified buyer email:', email);
+                res.status(404).json({ error: 'No id found with the specified buyer email' });
+            } else {
+                console.log('ids fetched from MySQL:', result);
+                res.json(result);
+            }
+            }
+    })
 });
 
+// Endpoint to fetch farmer ID using buyer email
+app.get("/api/farmer-id", async (req, res) => {
+    const { email } = req.query;
+    console.log("this is email", email)
+    const sql="SELECT farmer_id FROM farmers WHERE email = ?"
+
+    connection.query(sql, [email], (err, result)=>{
+        if(err){
+            console.error("Error fetching id with email from MySQL:", err.message);
+            res.status(500).json({ error: err.message });
+        }else {
+            if (result.length == 0) {
+                console.log('No id found with the specified farmer email:', email);
+                res.status(404).json({ error: 'No id found with the specified farmer email' });
+            } else {
+                console.log('ids fetched from MySQL:', result);
+                res.json(result);
+            }
+            }
+    })
+});
 
 app.get('/api/cart', (req, res) => {
   res.status(200).json(cartItems);

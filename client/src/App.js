@@ -29,9 +29,8 @@ function App() {
             <Route path="/signup" element={<Signup/>}/>
             
             <Route exact path="/login" element={<Login/>} />
-
-            <Route path="/farmer-dashboard" element={<FarmerDashboard />} />
-            <Route path="/buyer-dashboard" element={<BuyerDashboard />} />
+            <Route path="/farmer-dashboard/:fEmail" element={<FarmerDashboard />} />
+            <Route path="/buyer-dashboard/:bEmail" element={<BuyerDashboard />} />
             <Route path="/cart" element={<CartPage/>} />
           </Routes>
         </div>
