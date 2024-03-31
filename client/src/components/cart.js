@@ -5,7 +5,8 @@ import { useParams } from 'react-router-dom';
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalCost, setTotalCost] = useState(0);
-
+  const [transactionReceipt, setTransactionReceipt] = useState(null);
+  const [transactionTotalCost, setTransactionTotalCost] = useState(0); // Variable to store total cost for the transaction
   const { bId } = useParams();
 
   useEffect(() => {
@@ -19,11 +20,10 @@ const CartPage = () => {
   useEffect(() => {
     // Clear cart items when the component mounts
     setCartItems([]);
-  }, [bId]); // Empty dependency array ensures this effect runs only once when the component mounts
+  }, [bId]);
 
   const fetchCartItems = async () => {
     try {
-      // Fetch cart items only if cartItems state is empty
       if (cartItems.length === 0) {
         const response = await axios.get('http://localhost:5000/api/cart');
         setCartItems(response.data);
@@ -32,7 +32,6 @@ const CartPage = () => {
       console.error('Error fetching cart items:', error);
     }
   };
-  
 
   const calculateTotalCost = () => {
     let total = 0;
@@ -44,10 +43,12 @@ const CartPage = () => {
 
   const handleBuy = async () => {
     try {
-      // Aggregate total price for each product ID
       const totalPriceMap = {};
+      let transactionTotal = 0; // Variable to store total cost for this transaction
+
       cartItems.forEach(item => {
         const totalPrice = item.pprice * item.quantity;
+        transactionTotal += totalPrice; // Accumulate total cost for this transaction
         if (totalPriceMap[item.product_id]) {
           totalPriceMap[item.product_id] += totalPrice;
         } else {
@@ -55,22 +56,23 @@ const CartPage = () => {
         }
       });
 
-      // Prepare transaction data
       const transactionData = {
         products: Object.keys(totalPriceMap).map(productId => ({
           product_id: parseInt(productId),
-          quantity: 1, // Assuming each product occurs only once in the transaction
+          quantity: 1,
           price: totalPriceMap[productId],
           buyer_id: bId,
         }))
       };
 
-      // Send transaction data to the backend to store in the database
       const response = await axios.post('http://localhost:5000/api/transactions', transactionData);
-      console.log(response.data.message); // Log success message
-      // Clear the cart after successful transaction
+      console.log(response.data);
+
+      setTransactionReceipt(response.data);
+      setTransactionTotalCost(transactionTotal); // Store total cost for this transaction
+
       setCartItems([]);
-      alert('Items bought successfully!'); // Display success message
+      alert('Items bought successfully!');
     } catch (error) {
       console.error('Error processing transaction:', error);
     }
@@ -88,8 +90,26 @@ const CartPage = () => {
           </div>
         ))}
       </div>
-      <p><strong>Total Cost:</strong> ₹{totalCost}</p>
-      {cartItems.length > 0 && <button onClick={handleBuy}>Buy</button>} {/* Render the button only if there are items in the cart */}
+      {totalCost > 0 && <p><strong>Total Cost:</strong> ₹{totalCost}</p>}
+
+      {cartItems.length > 0 && <button onClick={handleBuy}>Buy</button>}
+      {transactionReceipt && (
+        <div className="receipt" style={{marginLeft:25}}>
+          <h2>Transaction Receipt</h2>
+          <p><strong>Transaction ID:</strong> {transactionReceipt.transactionId}</p>
+          <h3>Products:</h3>
+          <ul>
+            {transactionReceipt.products.map(product => (
+              <li key={product.product_id}>
+                <p><strong>Name:</strong> {product.pname}</p>
+                <p><strong>Quantity:</strong> {product.quantity}</p>
+                <p><strong>Price:</strong> ₹{product.pprice}</p>
+              </li>
+            ))}
+          </ul>
+          <p><strong>Total Price:</strong> ₹{transactionTotalCost}</p> {/* Use transactionTotalCost here */}
+        </div>
+      )}
     </div>
   );
 };

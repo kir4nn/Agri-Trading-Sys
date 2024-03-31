@@ -154,7 +154,6 @@ const FarmerDashboard = () => {
         setProductQuantity('');
         setProductPrice('');
         setProductDomain('');
-        setFarmerId('');
     };
 
     return (

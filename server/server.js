@@ -211,7 +211,7 @@ app.post('/api/cart/add', (req, res) => {
     });
 });
 
-// Endpoint to handle transactions and delete bought products
+
 app.post('/api/transactions', (req, res) => {
     const { products } = req.body;
 
@@ -233,21 +233,43 @@ app.post('/api/transactions', (req, res) => {
             return res.status(500).json({ error: 'Internal server error' });
         }
 
-        // Transaction completed successfully, now delete the bought products
+        // Get the transaction ID from the inserted result
+        const transactionId = result.insertId;
+
+        // Transaction completed successfully, now fetch product details to return as response
         const productIds = products.map(product => product.product_id);
-        const deleteProductsQuery = 'DELETE FROM products WHERE product_id IN (?)';
-        connection.query(deleteProductsQuery, [productIds], (deleteErr, deleteResult) => {
-            if (deleteErr) {
-                console.error('Error deleting bought products:', deleteErr);
+        const selectProductsQuery = 'SELECT * FROM products WHERE product_id IN (?)';
+        connection.query(selectProductsQuery, [productIds], (selectErr, selectResult) => {
+            if (selectErr) {
+                console.error('Error fetching product details:', selectErr);
                 return res.status(500).json({ error: 'Internal server error' });
             }
 
-            // Products deleted successfully
-            console.log('Deleted products:', productIds);
-            res.status(200).json({ message: 'Transaction completed successfully' });
+            // Products fetched successfully, now delete the bought products
+            const deleteProductsQuery = 'DELETE FROM products WHERE product_id IN (?)';
+            connection.query(deleteProductsQuery, [productIds], (deleteErr, deleteResult) => {
+                if (deleteErr) {
+                    console.error('Error deleting bought products:', deleteErr);
+                    return res.status(500).json({ error: 'Internal server error' });
+                }
+
+                // Products deleted successfully
+                console.log('Deleted products:', productIds);
+
+                // Return the transaction ID and product details as response
+                res.status(200).json({ 
+                    message: 'Transaction completed successfully', 
+                    transactionId: transactionId, // Include the transaction ID in the response
+                    products: selectResult 
+                });
+            });
         });
     });
+    cartItems=[]
 });
+
+
+
 
 
 // Endpoint to handle user login
