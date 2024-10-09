@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require("cors");
 const collection = require("./mongo");
 const connection = require('./sqlDB.js'); // Import MySQL connection
+const axios=require('axios')
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -355,6 +357,42 @@ app.get('/api/cart', (req, res) => {
   res.status(200).json(cartItems);
 });
 
+app.post('/predict-yield', async (req, res) => {
+  try {
+      
+      const data = req.body;
+      const response = await axios.post('http://127.0.0.1:5001/predict', data); // Assuming Flask app is running on port 5000
+      const yieldPrediction = response.data.yield_prediction;
+      res.json({ yieldPrediction });
+  } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.post('/calculate-profit', (req, res) => {
+  try {
+      const { yieldValue, crop } = req.body; 
+      let estimatedProfit = 0;
+  
+      if (priceData.hasOwnProperty(crop)) {
+          const modalPrice = priceData[crop].modal_price;
+         // console.log(modalPrice)
+          const revenue = modalPrice * yieldValue * 40; 
+        //  console.log(revenue);
+        estimatedProfit = revenue;
+         // console.log(totalRevenue);
+      }
+      else{
+          console.log("cROP NOT FOUND")
+      }
+      console.log(estimatedProfit);
+      res.json({estimatedProfit });
+  } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 app.listen(5000, () => { console.log("Server started on port 5000"); });
 

@@ -14,7 +14,7 @@ const Navigation = () => {
     <nav>
       <ul style={{ color: 'white' }}>
         <li style={{ color: 'white' }}><a href="/">Home</a></li>
-        <li style={{ color: 'white' }}><a href="http://127.0.0.1:5001/">Crop Recommendation</a></li>
+        <li style={{ color: 'white' }}><a href="/yield-predictor">Yield Predictor</a></li>
         <li style={{ color: 'white' }}><a href="/" onClick={handleLogout}>Logout</a></li>
         {/* Replace '/' with actual logout endpoint if needed */}
       </ul>

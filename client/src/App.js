@@ -10,6 +10,7 @@ import BuyerDashboard from './components/BuyerDashboard';
 import HomeIcon from './images/homee.png'
 import CartPage from './components/cart';
 import PrivateRoutes from "./utils/PrivateRoutes";
+import YieldPredictionForm from "./components/Yield_Predictor.js";
 
 function App() {
   const [token, setToken] = useState(false);
@@ -33,7 +34,7 @@ function App() {
             </Route>
             <Route path="/" element={<Home/>}/>
             <Route path="/signup" element={<Signup/>}/>
-            
+            <Route path="/yield-predictor" element={<YieldPredictionForm/>} />
             <Route path="/cart/:bId" element={<CartPage/>} />
           </Routes>
         </div>

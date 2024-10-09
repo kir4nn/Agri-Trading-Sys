@@ -83,7 +83,7 @@ function Signup() {
                 {errors.email && <p style={{ color: 'red', fontSize: '0.8rem' }}>{errors.email}</p>} {/* Display email error in red */}
                 <input type="password" onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
                 {errors.password && <p style={{ color: 'red', fontSize: '0.8rem' }}>{errors.password}</p>} {/* Display password error in red */}
-                <input type="text" onChange={(e) => setContactNo(e.target.value)} placeholder="Contact Number" />
+                <input maxLength={10} type="text" onChange={(e) => setContactNo(e.target.value)} placeholder="Contact Number" />
                 {errors.contactNo && <p style={{ color: 'red', fontSize: '0.8rem' }}>{errors.contactNo}</p>} {/* Display contact number error in red */}
                 <input type="text" onChange={(e) => setFname(e.target.value)} placeholder="First Name" />
                 <input type="text" onChange={(e) => setMinit(e.target.value)} placeholder="Middle Initial" />
